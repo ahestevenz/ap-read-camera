@@ -21,11 +21,9 @@ namespace ap {
         OCVPointGrey();
         ~OCVPointGrey();
         bool OpenCamera();
-        bool RestoreCameraBuffer();
-        cv::Mat ConvertPointGreyToOpenCV();
-        void ConvertToRGB();
+        bool StopCameraCapture();
+        bool CameraDisconnect();
         cv::Mat GetOpenCVFormat();
-
 
     private:
         bool GetCamerasNumber(unsigned int num, BusManager *bus_mgr);
@@ -33,7 +31,9 @@ namespace ap {
         bool CameraConnect();
         bool GetCameraInfo(CameraInfo camInfo, bool show);
         bool StartCameraCapture();
-        bool StopCameraCapture();
+        bool RestoreCameraBuffer();
+        cv::Mat ConvertPointGreyToOpenCV();
+        void ConvertToRGB();
 
     private:
         Camera_ptr camera;

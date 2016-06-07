@@ -42,9 +42,14 @@ bool OCVPointGrey::GetCamerasNumber(unsigned int num, BusManager *bus_mgr)
            cerr << "Failed to read the number of cameras" << endl;
            return false;
        }
+       if( num == 0 )
+       {
+           cerr << "No camera is connected. Please connect the camera." << endl;
+           return false;
+       }
        if( num != 1 )
        {
-           cerr << "Please connect only one camera: " << num << endl;
+           cerr << "Please connect only one camera: " << num << " cameras are connected." << endl;
            return false;
        }
    return true;
@@ -123,6 +128,20 @@ bool OCVPointGrey::StopCameraCapture()
     }
 
     return true;
+}
+
+bool OCVPointGrey::CameraDisconnect()
+{
+    Error error;
+    error=camera->Disconnect();
+    if ( error != PGRERROR_OK )
+    {
+        cerr << "Failed to disconnect to the camera. Error code: "<< error.GetLine() << endl;
+        return false;
+    }
+
+    return true;
+
 }
 
 bool OCVPointGrey::RestoreCameraBuffer()
