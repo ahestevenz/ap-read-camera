@@ -161,6 +161,10 @@ int main(int argc, char *argv[])
     }
   }
 
+    ocvCamera.StopCameraCapture();
+    ocvCamera.CameraDisconnect();
+
+
     return 0;
 
 }
