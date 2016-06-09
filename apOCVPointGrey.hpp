@@ -1,6 +1,8 @@
 #ifndef APOCVPOINTGREY_H
 #define APOCVPOINTGREY_H
 
+#define DEBUG
+
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include <opencv2/opencv.hpp>
@@ -24,6 +26,7 @@ namespace ap {
         bool StopCameraCapture();
         bool CameraDisconnect();
         cv::Mat GetOpenCVFormat();
+        bool IsHDRSupported();
 
     private:
         bool GetCamerasNumber(unsigned int num, BusManager *bus_mgr);
@@ -40,6 +43,12 @@ namespace ap {
         PGRGuid guid;
         Image rawImage;
         Image rgbImage;
+
+    /* Registers */
+        static const unsigned int k_HDRCtrl = 0x1800;
+        static const unsigned int k_HDROn = 0x82000000;
+        static const unsigned int k_HDROff = 0x80000000;
+
 
     };
 }

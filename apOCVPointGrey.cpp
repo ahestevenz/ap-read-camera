@@ -15,7 +15,7 @@ OCVPointGrey::~OCVPointGrey()
 
 bool OCVPointGrey::OpenCamera()
 {
-    CameraInfo camInfo;   
+    CameraInfo camInfo;
     BusManager busMgr;
     unsigned int numCameras=0;
 
@@ -61,7 +61,10 @@ bool OCVPointGrey::GetCamera(FlyCapture2::BusManager *bus_mgr)
     error = bus_mgr->GetCameraFromIndex(0, &guid);
     if ( error != PGRERROR_OK )
     {
-        cerr << "Failed to get the camera. Error code: "<< error.GetLine() << endl;
+        cerr << "Failed to get the camera. Error code: "<< error.GetType() << endl;
+        #ifdef DEBUG
+        error.PrintErrorTrace();
+        #endif
         return false;
     }
 
@@ -74,7 +77,10 @@ bool OCVPointGrey::CameraConnect()
     error = camera->Connect(&guid );
     if ( error != PGRERROR_OK )
     {
-        cerr << "Failed to connect to the camera. Error code: "<< error.GetLine() << endl;
+        cerr << "Failed to connect to the camera. Error code: "<< error.GetType() << endl;
+        #ifdef DEBUG
+        error.PrintErrorTrace();
+        #endif
         return false;
     }
 
@@ -87,7 +93,10 @@ bool OCVPointGrey::GetCameraInfo(CameraInfo camInfo, bool show)
     error = camera->GetCameraInfo( &camInfo );
     if ( error != PGRERROR_OK )
     {
-         cerr << "Failed to get information from the camera. Error code: "<< error.GetLine() << endl;
+         cerr << "Failed to get information from the camera. Error code: "<< error.GetType() << endl;
+         #ifdef DEBUG
+         error.PrintErrorTrace();
+         #endif
          return false;
     }
     if (show)
@@ -110,7 +119,10 @@ bool OCVPointGrey::StartCameraCapture()
     }
     else if ( error != PGRERROR_OK )
     {
-        cerr << "Failed to start image capture. Error code: "<< error.GetLine() << endl;
+        cerr << "Failed to start image capture. Error code: "<< error.GetType() << endl;
+        #ifdef DEBUG
+        error.PrintErrorTrace();
+        #endif
         return false;
     }
 
@@ -123,7 +135,10 @@ bool OCVPointGrey::StopCameraCapture()
     error = camera->StopCapture();
     if ( error != PGRERROR_OK )
     {
-        cerr << "Failed to stop image capture. Error code: "<< error.GetLine() << endl;
+        cerr << "Failed to stop image capture. Error code: "<< error.GetType() << endl;
+        #ifdef DEBUG
+        error.PrintErrorTrace();
+        #endif
         return false;
     }
 
@@ -136,7 +151,10 @@ bool OCVPointGrey::CameraDisconnect()
     error=camera->Disconnect();
     if ( error != PGRERROR_OK )
     {
-        cerr << "Failed to disconnect to the camera. Error code: "<< error.GetLine() << endl;
+        cerr << "Failed to disconnect to the camera. Error code: "<< error.GetType() << endl;
+        #ifdef DEBUG
+        error.PrintErrorTrace();
+        #endif
         return false;
     }
 
@@ -150,7 +168,10 @@ bool OCVPointGrey::RestoreCameraBuffer()
     error=camera->RetrieveBuffer( &rawImage );
     if ( error != PGRERROR_OK )
     {
-        cerr << "Capture error. Error code: "<< error.GetLine() << endl;
+        cerr << "Capture error. Error code: "<< error.GetType() << endl;
+        #ifdef DEBUG
+        error.PrintErrorTrace();
+        #endif
         return false;
     }
 
@@ -179,7 +200,19 @@ cv::Mat OCVPointGrey::GetOpenCVFormat()
     return image;
 }
 
+bool OCVPointGrey::IsHDRSupported()
+{
+	Error error;
+	unsigned int RegVal;
+	error = camera->ReadRegister( k_HDRCtrl, &RegVal );
+	if (error != PGRERROR_OK)
+	{
+        cerr << "The camera is not HDR supported. Error code: "<< error.GetType() << endl;
+        #ifdef DEBUG
+        error.PrintErrorTrace();
+        #endif
+		return false;
+	}
 
-
-
-
+	return ( 0x80000000 & RegVal ) ? true : false;
+}
