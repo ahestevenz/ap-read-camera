@@ -164,6 +164,8 @@ int main(int argc, char *argv[])
     ocvCamera.StopCameraCapture();
     ocvCamera.CameraDisconnect();
 
+    bool nada=ocvCamera.IsHDRSupported();
+
 
     return 0;
 
