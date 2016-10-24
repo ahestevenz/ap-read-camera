@@ -8,7 +8,7 @@ QT       += core
 
 QT       -= gui
 
-TARGET = apReadCamera
+TARGET = pgrey
 CONFIG   += console
 CONFIG   -= app_bundle
 
@@ -16,10 +16,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    apOCVPointGrey.cpp
+           apOCVPointGrey.cpp
 
 HEADERS += \
-    apOCVPointGrey.hpp
+           apOCVPointGrey.hpp
 
 INCLUDEPATH += 	/usr/local/include/opencv2/ \
                 /usr/local/include/opencv/  \
