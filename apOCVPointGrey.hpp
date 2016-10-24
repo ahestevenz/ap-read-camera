@@ -49,7 +49,9 @@ namespace ap {
         static const unsigned int k_HDROn = 0x82000000;
         static const unsigned int k_HDROff = 0x80000000;
 
-
+    public:
+        static const int OK=0;
+        static const int FAILED=-1;
     };
 }
 
