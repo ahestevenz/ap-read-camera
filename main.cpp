@@ -36,11 +36,11 @@ int main(int argc, char *argv[])
 
 
     namedWindow("Camera",CV_WINDOW_NORMAL);
-    resizeWindow("Camera", 800, 800);
+    resizeWindow("Camera", 1200, 900);
 
     OCVPointGrey ocvCamera;
     bool status=ocvCamera.OpenCamera();   
-
+    ocvCamera.SetWhiteBalance();
     if (status)
     {
 
