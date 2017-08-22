@@ -216,3 +216,25 @@ bool OCVPointGrey::IsHDRSupported()
 
 	return ( 0x80000000 & RegVal ) ? true : false;
 }
+
+bool OCVPointGrey::SetWhiteBalance()
+{
+    Property prop;
+    prop.type = WHITE_BALANCE;
+    prop.onOff = true;
+    prop.autoManualMode = false;
+    prop.valueA = v_RedChannel; // red channel
+    prop.valueB = v_BlueChannel; // blue channel
+
+    Error error = camera->SetProperty( &prop );
+    if ( error != PGRERROR_OK )
+    {
+        cerr << "Cannot set the White Balance setting. Error code: "<< error.GetType() << endl;
+        #ifdef DEBUG
+        error.PrintErrorTrace();
+        #endif
+        return false;
+    }
+
+    return true;
+}

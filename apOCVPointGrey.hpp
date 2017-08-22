@@ -14,7 +14,7 @@ using namespace FlyCapture2;
 using namespace boost;
 using namespace std;
 
-typedef shared_ptr<Camera> Camera_ptr;
+typedef boost::shared_ptr<Camera> Camera_ptr;
 
 namespace ap {
     class OCVPointGrey
@@ -27,6 +27,7 @@ namespace ap {
         bool CameraDisconnect();
         cv::Mat GetOpenCVFormat();
         bool IsHDRSupported();
+        bool SetWhiteBalance();
 
     private:
         bool GetCamerasNumber(unsigned int num, BusManager *bus_mgr);
@@ -48,6 +49,8 @@ namespace ap {
         static const unsigned int k_HDRCtrl = 0x1800;
         static const unsigned int k_HDROn = 0x82000000;
         static const unsigned int k_HDROff = 0x80000000;
+        static const unsigned int v_BlueChannel = 682;
+        static const unsigned int v_RedChannel = 629;
 
     public:
         static const int OK=0;
