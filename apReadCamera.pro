@@ -29,6 +29,8 @@ INCLUDEPATH += 	/usr/local/include/opencv2/ \
 CFLAGS=-I/usr/include/libavcodec
 CPPFLAGS=-I/usr/include/libavcodec
 
+QMAKE_CXXFLAGS += -std=c++11
+
 LIBS += `pkg-config --libs opencv`
 LIBS += /usr/lib/libflycapture.so
 
