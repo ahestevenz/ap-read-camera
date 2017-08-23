@@ -27,7 +27,7 @@ namespace ap {
         bool CameraDisconnect();
         cv::Mat GetOpenCVFormat();
         bool IsHDRSupported();
-        bool SetWhiteBalance();
+        bool SetWhiteBalance(int value_a=v_RedChannel, int value_b=v_BlueChannel);
 
     private:
         bool GetCamerasNumber(unsigned int num, BusManager *bus_mgr);

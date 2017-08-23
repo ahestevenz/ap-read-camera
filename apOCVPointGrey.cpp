@@ -217,14 +217,14 @@ bool OCVPointGrey::IsHDRSupported()
 	return ( 0x80000000 & RegVal ) ? true : false;
 }
 
-bool OCVPointGrey::SetWhiteBalance()
+bool OCVPointGrey::SetWhiteBalance(int value_a, int value_b)
 {
     Property prop;
     prop.type = WHITE_BALANCE;
     prop.onOff = true;
     prop.autoManualMode = false;
-    prop.valueA = v_RedChannel; // red channel
-    prop.valueB = v_BlueChannel; // blue channel
+    prop.valueA = value_a; // red channel
+    prop.valueB = value_b; // blue channel
 
     Error error = camera->SetProperty( &prop );
     if ( error != PGRERROR_OK )
