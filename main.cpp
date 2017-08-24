@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     }
 
     int c = 0;
-    int grabar = 0, cruz = 0, foto = 0;   
+    int grabar = 0, cruz = 0, foto = 0, number_top_image = 0, number_bottom_image = 0;
 
 
     namedWindow("Camera",CV_WINDOW_NORMAL);
@@ -63,8 +63,15 @@ int main(int argc, char *argv[])
         }
         if(foto || key == 't')
         {
-            foto = 0;            
-            imwrite(pathDirectory,   image);
+            foto = 0;
+            number_top_image++;
+            imwrite(pathDirectory + "/AQD_Top_Image_" + to_string(number_top_image) + ".jpg",   image);
+        }
+        if(foto || key == 'b')
+        {
+            foto = 0;
+            number_bottom_image++;
+            imwrite(pathDirectory + "/AQD_Bottom_Image_" + to_string(number_bottom_image) + ".jpg",   image);
         }
         if(cruz || key == 'c')
         {
